@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exotic Plant Garden</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom right, #d3f0d2, #b4e0b2);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    button {
+      margin: 10px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2f855a;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #276749;
+    }
+    img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    h1 {
+      color: #22543d;
+    }
+    #plantInfo {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Language Selection -->
+    <div id="langSelect">
+      <h2>🌿 Welcome to the Exotic Plant Garden 🌿</h2>
+      <p>Select your language / अपनी भाषा चुनें / നിങ്ങളുടെ ഭാഷ തിരഞ്ഞെടുക്കുക</p>
+      <button onclick="chooseLang('en')">English</button>
+      <button onclick="chooseLang('hi')">Hindi</button>
+      <button onclick="chooseLang('ml')">Malayalam</button>
+    </div>
+
+    <!-- Plant Information -->
+    <div id="plantInfo">
+      <h1 id="plantName"></h1>
+      <h3 id="scientificName" style="font-style:italic;"></h3>
+      <img id="plantImage" src="rose.jpg" alt="Plant photo">
+      <p id="plantDescription" style="margin-top:15px;"></p>
+      <button onclick="playVoice()">🔊 Play Voice</button>
+    </div>
+  </div>
+
+  <script>
+    // Example: Information for one plant (Rose)
+    const plantData = {
+      en: {
+        name: "Rose",
+        sci: "Rosa indica",
+        desc: "The rose is a beautiful flowering plant known for its vibrant colors and pleasant fragrance. It symbolizes love and purity and is cultivated worldwide for ornamental and medicinal purposes."
+      },
+      hi: {
+        name: "गुलाब",
+        sci: "Rosa indica",
+        desc: "गुलाब एक सुंदर फूलों वाला पौधा है, जो अपने चमकीले रंगों और सुगंध के लिए जाना जाता है। यह प्रेम और पवित्रता का प्रतीक है और सजावटी तथा औषधीय उपयोग के लिए दुनिया भर में उगाया जाता है।"
+      },
+      ml: {
+        name: "റോസ്",
+        sci: "Rosa indica",
+        desc: "റോസ് അതിന്റെ മനോഹരമായ നിറങ്ങൾക്കും സുഗന്ധത്തിനും പേരുകേട്ട ഒരു പൂച്ചെടിയാണ്. ഇത് സ്നേഹത്തിന്റെയും പരിശുദ്ധിയുടെയും പ്രതീകമാണ്, അലങ്കാരത്തിനും ഔഷധ ഉപയോഗത്തിനും ലോകമെമ്പാടും വളർത്തപ്പെടുന്നു."
+      }
+    };
+
+    let selectedLang = 'en';
+
+    function chooseLang(lang) {
+      selectedLang = lang;
+      document.getElementById('langSelect').style.display = 'none';
+      document.getElementById('plantInfo').style.display = 'block';
+      document.getElementById('plantName').innerText = plantData[lang].name;
+      document.getElementById('scientificName').innerText = plantData[lang].sci;
+      document.getElementById('plantDescription').innerText = plantData[lang].desc;
+    }
+
+    function playVoice() {
+      const msg = new SpeechSynthesisUtterance(plantData[selectedLang].desc);
+      if (selectedLang === 'hi') msg.lang = 'hi-IN';
+      else if (selectedLang === 'ml') msg.lang = 'ml-IN';
+      else msg.lang = 'en-US';
+      window.speechSynthesis.speak(msg);
+    }
+  </script>
+</body>
+</html>
